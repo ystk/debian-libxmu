@@ -1,8 +1,5 @@
-/* $Xorg: CvtStdSel.c,v 1.4 2001/02/09 02:03:52 xorgcvs Exp $ */
-/* $XdotOrg: xc/lib/Xmu/CvtStdSel.c,v 1.5 2005/05/22 04:36:38 alanc Exp $ */
-
 /*
- 
+
 Copyright 1988, 1998  The Open Group
 
 Permission to use, copy, modify, distribute, and sell this software and its
@@ -26,7 +23,6 @@ used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 
 */
-/* $XFree86: xc/lib/Xmu/CvtStdSel.c,v 3.19 2001/11/21 16:22:59 tsi Exp $ */
 
 /*
  * This file contains routines to handle common selection targets.
@@ -114,7 +110,7 @@ get_os_name(void)
 #ifdef OS_NAME
 	return XtNewString(OS_NAME);
 #else
-#if defined(X_OS_FILE) || defined(MOTD_FILE)	
+#if defined(X_OS_FILE) || defined(MOTD_FILE)
 	FILE *f = NULL;
 #endif
 

@@ -1,7 +1,5 @@
-/* $Xorg: WidgetNode.c,v 1.5 2001/02/09 02:03:53 xorgcvs Exp $ */
-
 /*
- 
+
 Copyright 1989, 1998  The Open Group
 
 Permission to use, copy, modify, distribute, and sell this software and its
@@ -25,8 +23,6 @@ used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 
 */
-
-/* $XFree86: xc/lib/Xmu/WidgetNode.c,v 1.12 2002/09/19 13:21:58 tsi Exp $ */
 
 /*
  * Author:  Jim Fulton, MIT X Consortium
@@ -105,7 +101,7 @@ find_resource(XmuWidgetNode *node, char *name, Bool cons)
 #define nreslist (int) (cons ? sup->nconstraints : sup->nresources)
 
     res.resource_name = name;
-    for (sup = node->superclass; 
+    for (sup = node->superclass;
 	 sup && (XtResourceList) binsearch ((char *) &res,
 					    reslist, nreslist,
 					    sizeof(XtResource),
@@ -199,7 +195,7 @@ XmuWnInitializeNodes(XmuWidgetNode *nodearray, int nnodes)
 	     */
 	    superclass = superclass->core_class.superclass;
 	}
-      done: 
+      done:
 	if (wn->superclass) {
 	    wn->siblings = wn->superclass->children;
 	    wn->superclass->children = wn;

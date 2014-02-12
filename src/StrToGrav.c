@@ -1,6 +1,4 @@
-/* $Xorg: StrToGrav.c,v 1.4 2001/02/09 02:03:53 xorgcvs Exp $ */
-
-/* 
+/*
 
 Copyright 1989, 1998  The Open Group
 
@@ -25,7 +23,6 @@ used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 
 */
-/* $XFree86: xc/lib/Xmu/StrToGrav.c,v 1.6 2001/01/17 19:42:57 dawes Exp $ */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -42,7 +39,7 @@ in this Software without prior written authorization from The Open Group.
  */
 static struct _namepair {
     XrmQuark quark;
-    char *name;
+    _Xconst char *name;
     XtGravity gravity;
 } names[] = {
     { NULLQUARK, XtEForget, ForgetGravity },
@@ -65,7 +62,7 @@ static struct _namepair {
 };
 
 /*
- * This function is deprecated as of the addition of 
+ * This function is deprecated as of the addition of
  * XtCvtStringToGravity in R6
  */
 void

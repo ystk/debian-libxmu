@@ -1,5 +1,3 @@
-/* $Xorg: DefErrMsg.c,v 1.4 2001/02/09 02:03:52 xorgcvs Exp $ */
-
 /*
 
 Copyright 1988, 1998  The Open Group
@@ -25,20 +23,18 @@ used in advertising or otherwise to promote the sale, use or other dealings
 in this Software without prior written authorization from The Open Group.
 
 */
-/* $XFree86: xc/lib/Xmu/DefErrMsg.c,v 1.7 2001/01/17 19:42:54 dawes Exp $ */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 #include <stdio.h>
-#define NEED_EVENTS
 #include <X11/Xlibint.h>
 #include <X11/Xproto.h>
 #include <X11/Xmu/Error.h>
 #include <X11/Xmu/SysUtil.h>
 
 /*
- * XmuPrintDefaultErrorMessage - print a nice error that looks like the usual 
+ * XmuPrintDefaultErrorMessage - print a nice error that looks like the usual
  * message.  Returns 1 if the caller should consider exitting else 0.
  */
 int
@@ -47,13 +43,13 @@ XmuPrintDefaultErrorMessage(Display *dpy, XErrorEvent *event, FILE *fp)
     char buffer[BUFSIZ];
     char mesg[BUFSIZ];
     char number[32];
-    char *mtype = "XlibMessage";
+    _Xconst char *mtype = "XlibMessage";
     register _XExtension *ext = (_XExtension *)NULL;
     _XExtension *bext = (_XExtension *)NULL;
     XGetErrorText(dpy, event->error_code, buffer, BUFSIZ);
     XGetErrorDatabaseText(dpy, mtype, "XError", "X Error", mesg, BUFSIZ);
     (void) fprintf(fp, "%s:  %s\n  ", mesg, buffer);
-    XGetErrorDatabaseText(dpy, mtype, "MajorCode", "Request Major code %d", 
+    XGetErrorDatabaseText(dpy, mtype, "MajorCode", "Request Major code %d",
 	mesg, BUFSIZ);
     (void) fprintf(fp, mesg, event->request_code);
     if (event->request_code < 128) {
@@ -88,7 +84,7 @@ XmuPrintDefaultErrorMessage(Display *dpy, XErrorEvent *event, FILE *fp)
 	/* kludge, try to find the extension that caused it */
 	buffer[0] = '\0';
 	for (ext = dpy->ext_procs; ext; ext = ext->next) {
-	    if (ext->error_string) 
+	    if (ext->error_string)
 		(*ext->error_string)(dpy, event->error_code, &ext->codes,
 				     buffer, BUFSIZ);
 	    if (buffer[0]) {
@@ -99,7 +95,7 @@ XmuPrintDefaultErrorMessage(Display *dpy, XErrorEvent *event, FILE *fp)
 		ext->codes.first_error < event->error_code &&
 		(!bext || ext->codes.first_error > bext->codes.first_error))
 		bext = ext;
-	}    
+	}
 	if (bext)
 	    XmuSnprintf(buffer, sizeof(buffer), "%s.%d", bext->name,
 			event->error_code - bext->codes.first_error);
@@ -138,7 +134,7 @@ XmuPrintDefaultErrorMessage(Display *dpy, XErrorEvent *event, FILE *fp)
 	(void) fprintf(fp, mesg, event->resourceid);
 	fputs("\n  ", fp);
     }
-    XGetErrorDatabaseText(dpy, mtype, "ErrorSerial", "Error Serial #%d", 
+    XGetErrorDatabaseText(dpy, mtype, "ErrorSerial", "Error Serial #%d",
 	mesg, BUFSIZ);
     (void) fprintf(fp, mesg, event->serial);
     fputs("\n  ", fp);
@@ -170,4 +166,4 @@ XmuSimpleErrorHandler(Display *dpy, XErrorEvent *errorp)
     }
     /* got a "real" X error */
     return XmuPrintDefaultErrorMessage (dpy, errorp, stderr);
-}	
+}
