@@ -1,3 +1,50 @@
+libxmu (2:1.1.1-1) unstable; urgency=low
+
+  * New upstream release.
+  * Don't require (fake)root for debian/rules clean.
+  * Bump build-deps on xutils-dev, xmlto and xorg-sgml-doctools per
+    configure.ac.
+  * Xmu.html no longer hardcodes the full path to xlogo.svg, drop sed call
+    from debian/rules.
+  * Remove David Nusinow from Uploaders.
+  * Bump debhelper build-dep for ${misc:Pre-Depends} usage.
+
+ -- Julien Cristau <jcristau@debian.org>  Sat, 21 Apr 2012 10:50:11 +0200
+
+libxmu (2:1.1.0-3) unstable; urgency=low
+
+  * Build for multiarch.
+
+ -- Steve Langasek <vorlon@debian.org>  Fri, 21 Oct 2011 14:47:59 -0700
+
+libxmu (2:1.1.0-2) unstable; urgency=low
+
+  [ Christopher James Halse Rogers ]
+  * debian/patches/01_dont_export_private_deps.patch:
+    - The Xmu.h header uses libXt symbols in a #define, so libXt is not a 
+      private dep.  With binutils-gold, the indirect dependency on Xt is not
+      considered when linking with Xmu so this causes build failures.
+
+  [ Julien Cristau ]
+  * Drop Pre-Depends on x11-common, only needed for upgrades from the
+    monolith.
+
+ -- Julien Cristau <jcristau@debian.org>  Thu, 28 Apr 2011 14:10:11 +0200
+
+libxmu (2:1.1.0-1) unstable; urgency=low
+
+  * New upstream release.
+  * Bump xutils-dev build-dep for new macros.
+  * Add xmlto, xorg-sgml-doctools, and w3m build-dep for the doc.
+  * Pass --with-xmlto and --without-fop (we want html and txt only).
+  * Pass --docdir=/usr/share/doc/libxmu-headers and add this directory to
+    libxmu-headers.install file.
+  * Remove the hardcoded path to the X logo in the Xmu.html file.
+  * Kill *.xml in the doc directory, no point in shipping them.
+  * Switch from --list-missing to --fail-missing for additional safety.
+
+ -- Cyril Brulebois <kibi@debian.org>  Fri, 19 Nov 2010 08:42:29 +0100
+
 libxmu (2:1.0.5-2) unstable; urgency=high
 
   [ Julien Cristau ]

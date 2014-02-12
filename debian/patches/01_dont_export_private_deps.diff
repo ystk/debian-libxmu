@@ -7,7 +7,7 @@ index a086f83..15dabbf 100644
  Description: Xmu Library
  Version: @PACKAGE_VERSION@
 -Requires: xproto x11 xt
-+Requires: xproto
++Requires: xproto xt
  Requires.private: x11 xt xext
  Cflags: -I${includedir}
  Libs: -L${libdir} -lXmu

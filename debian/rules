@@ -23,6 +23,8 @@ endif
 DEB_HOST_ARCH      ?= $(shell dpkg-architecture -qDEB_HOST_ARCH)
 DEB_HOST_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_HOST_GNU_TYPE)
 DEB_BUILD_GNU_TYPE ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
 ifeq ($(DEB_BUILD_GNU_TYPE), $(DEB_HOST_GNU_TYPE))
 	confflags += --build=$(DEB_HOST_GNU_TYPE)
 else
@@ -40,16 +42,17 @@ build-stamp: configure
 	mkdir -p build
 	cd build && \
 	../configure --prefix=/usr --mandir=\$${prefix}/share/man \
+	             --libdir=\$${prefix}/lib/$(DEB_HOST_MULTIARCH) \
 	             --infodir=\$${prefix}/share/info $(confflags) \
+	             --docdir=\$${prefix}/share/doc/libxmu-headers \
+	             --with-xmlto --without-fop \
 	             CFLAGS="$(CFLAGS)" 
 	cd build && $(MAKE)
 	>$@
 
 clean: xsfclean
 	dh_testdir
-	dh_testroot
 	rm -f build-stamp
-
 	rm -f config.cache config.log config.status
 	rm -f */config.cache */config.log */config.status
 	rm -f conftest* */conftest*
@@ -57,8 +60,7 @@ clean: xsfclean
 	rm -rf build
 	rm -f INSTALL aclocal.m4 config.guess config.h.in config.sub configure
 	rm -f depcomp install-sh ltmain.sh missing mkinstalldirs
-	rm -f $$(find -name Makefile.in)
-
+	find -name Makefile.in -delete
 	dh_clean
 
 install: build
@@ -68,6 +70,8 @@ install: build
 	dh_installdirs
 
 	cd build && $(MAKE) DESTDIR=$(CURDIR)/debian/tmp install
+	# No need to keep '*.xml' around:
+	find debian/tmp/usr/share/doc/libxmu-headers -name '*.xml' -delete
 
 # Build architecture-dependent files here.
 binary-arch: install
@@ -75,7 +79,7 @@ binary-arch: install
 	dh_testroot
 
 	dh_installdocs -s
-	dh_install -s --sourcedir=debian/tmp --list-missing -Xusr/include -X.la
+	dh_install -s --sourcedir=debian/tmp --fail-missing -Xusr/include -X.la
 	dh_installchangelogs -s ChangeLog
 	dh_link -s
 	dh_strip -Nlibxmu6 -Nlibxmuu1

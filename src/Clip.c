@@ -24,7 +24,6 @@
  * dealings in this Software without prior written authorization from the
  * XFree86 Project.
  */
-/* $XFree86: xc/lib/Xmu/Clip.c,v 1.1 1998/08/16 10:25:03 dawes Exp $ */
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -445,7 +444,7 @@ XmuAreaAnd(XmuArea *dst, XmuArea *src)
 	  Z = Z->next;
 	  if (Z->y >= p->y)
 	    {
-	      XmuScanline *q = XmuNewScanline(Z->y, 0, 0); 
+	      XmuScanline *q = XmuNewScanline(Z->y, 0, 0);
 	      XmuScanlineCopy(q, Z);
 
 	      XmuScanlineAnd(q, top);
