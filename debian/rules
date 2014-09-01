@@ -7,7 +7,7 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-include debian/xsfbs/xsfbs.mk
+include /usr/share/quilt/quilt.make
 
 CFLAGS = -Wall -g
 ifneq (,$(filter noopt,$(DEB_BUILD_OPTIONS)))
@@ -31,11 +31,12 @@ else
 	confflags += --build=$(DEB_BUILD_GNU_TYPE) --host=$(DEB_HOST_GNU_TYPE)
 endif
 
-configure: $(STAMP_DIR)/patch
+configure: $(QUILT_STAMPFN)
 	dh_testdir
 	autoreconf -vfi
 
-build: build-stamp
+build: build-arch build-indep
+build-indep build-arch: build-stamp
 build-stamp: configure
 	dh_testdir
 
@@ -50,7 +51,7 @@ build-stamp: configure
 	cd build && $(MAKE)
 	>$@
 
-clean: xsfclean
+clean: unpatch
 	dh_testdir
 	rm -f build-stamp
 	rm -f config.cache config.log config.status
@@ -79,8 +80,8 @@ binary-arch: install
 	dh_testroot
 
 	dh_installdocs -s
-	dh_install -s --sourcedir=debian/tmp --fail-missing -Xusr/include -X.la
-	dh_installchangelogs -s ChangeLog
+	dh_install -s --fail-missing -Xusr/include -X.la
+	dh_installchangelogs -s
 	dh_link -s
 	dh_strip -Nlibxmu6 -Nlibxmuu1
 	dh_strip -plibxmu6 --dbg-package=libxmu6-dbg
@@ -98,8 +99,8 @@ binary-arch: install
 binary-indep: DH_OPTIONS=-i
 binary-indep: build install
 	dh_installdocs
-	dh_install --sourcedir=debian/tmp
-	dh_installchangelogs ChangeLog
+	dh_install
+	dh_installchangelogs
 	dh_link
 	dh_compress
 	dh_fixperms
@@ -109,4 +110,4 @@ binary-indep: build install
 	dh_builddeb
 
 binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install
+.PHONY: build build-arch build-indep clean binary-indep binary-arch binary install

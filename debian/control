@@ -138,7 +138,10 @@ Package: libxmu-headers
 Section: libdevel
 Architecture: all
 Multi-Arch: foreign
-Depends: libx11-dev, x11proto-core-dev
+Depends:
+ libx11-dev,
+ x11proto-core-dev,
+ ${misc:Depends},
 Description: X11 miscellaneous utility library headers
  libXmu and libXmuu are miscellaneous utility libraries for X library
  developers to abstract some common functions.  This package provides the

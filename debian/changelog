@@ -1,3 +1,13 @@
+libxmu (2:1.1.2-1) unstable; urgency=low
+
+  * New upstream release.
+  * Add ${misc:Depends} to libxmu-headers.
+  * Use /usr/share/quilt/quilt.make instead of xsfbs for patching.
+  * Add build-{arch,indep} debian/rules targets.
+  * Bump debhelper compat level from 5 to 7.
+
+ -- Julien Cristau <jcristau@debian.org>  Mon, 05 May 2014 14:13:01 +0200
+
 libxmu (2:1.1.1-1) unstable; urgency=low
 
   * New upstream release.
